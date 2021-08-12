@@ -7,10 +7,6 @@
 package demo
 
 import (
-	context "context"
-	grpc "google.golang.org/grpc"
-	codes "google.golang.org/grpc/codes"
-	status "google.golang.org/grpc/status"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -212,84 +208,4 @@ func file_proto_demo_demo_proto_init() {
 	file_proto_demo_demo_proto_rawDesc = nil
 	file_proto_demo_demo_proto_goTypes = nil
 	file_proto_demo_demo_proto_depIdxs = nil
-}
-
-// Reference imports to suppress errors if they are not otherwise used.
-var _ context.Context
-var _ grpc.ClientConnInterface
-
-// This is a compile-time assertion to ensure that this generated file
-// is compatible with the grpc package it is being compiled against.
-const _ = grpc.SupportPackageIsVersion6
-
-// DemoServiceClient is the client API for DemoService service.
-//
-// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
-type DemoServiceClient interface {
-	SayHello(ctx context.Context, in *DemoRequest, opts ...grpc.CallOption) (*DemoResponse, error)
-}
-
-type demoServiceClient struct {
-	cc grpc.ClientConnInterface
-}
-
-func NewDemoServiceClient(cc grpc.ClientConnInterface) DemoServiceClient {
-	return &demoServiceClient{cc}
-}
-
-func (c *demoServiceClient) SayHello(ctx context.Context, in *DemoRequest, opts ...grpc.CallOption) (*DemoResponse, error) {
-	out := new(DemoResponse)
-	err := c.cc.Invoke(ctx, "/demo.DemoService/SayHello", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-// DemoServiceServer is the server API for DemoService service.
-type DemoServiceServer interface {
-	SayHello(context.Context, *DemoRequest) (*DemoResponse, error)
-}
-
-// UnimplementedDemoServiceServer can be embedded to have forward compatible implementations.
-type UnimplementedDemoServiceServer struct {
-}
-
-func (*UnimplementedDemoServiceServer) SayHello(context.Context, *DemoRequest) (*DemoResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SayHello not implemented")
-}
-
-func RegisterDemoServiceServer(s *grpc.Server, srv DemoServiceServer) {
-	s.RegisterService(&_DemoService_serviceDesc, srv)
-}
-
-func _DemoService_SayHello_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DemoRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(DemoServiceServer).SayHello(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/demo.DemoService/SayHello",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DemoServiceServer).SayHello(ctx, req.(*DemoRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-var _DemoService_serviceDesc = grpc.ServiceDesc{
-	ServiceName: "demo.DemoService",
-	HandlerType: (*DemoServiceServer)(nil),
-	Methods: []grpc.MethodDesc{
-		{
-			MethodName: "SayHello",
-			Handler:    _DemoService_SayHello_Handler,
-		},
-	},
-	Streams:  []grpc.StreamDesc{},
-	Metadata: "proto/demo/demo.proto",
 }
