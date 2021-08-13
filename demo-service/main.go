@@ -17,7 +17,7 @@ func (d *DemoServiceHandler) SayHello(ctx context.Context, req *pb.DemoRequest, 
 func main() {
 	// 注册服务名必须和demo.proto中的package声明一致
 	service := micro.NewService(
-		micro.Name("services.demo"),
+		micro.Name("services.demo.service"),
 	)
 
 	service.Init()
