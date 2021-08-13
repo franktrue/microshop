@@ -2,7 +2,7 @@ package main
 
 import (
 	"context"
-	pb "github.com/franktrue/microshop/services/demo/proto/demo"
+	pb "github.com/franktrue/microshop/services/demo-service/proto/demo"
 	"github.com/micro/go-micro/v2"
 	"log"
 )
